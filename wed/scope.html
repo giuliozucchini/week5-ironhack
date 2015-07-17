@@ -1,0 +1,44 @@
+(function() {
+  var map = document.getElementById('map')
+  var getPositions = document.getElementById('positions')
+  var checkIn = document.getElementById('new-position')
+  var reset = document.getElementById('clear-positions')
+
+  function mapURL(lon, lat) {
+    var API_KEY = 'pk.eyJ1IjoicmNzb2xlIiwiYSI6IjczMzMzNjBjZGYwZjU2YjA3ZWJiNmU4MzcxNTJmMWE2In0.n5RjmRYMwVMAnZPi84pEYA'
+    var mapID = 'examples.map-zr0njcqy'
+    var marker = `pin-l-ice-cream+000(${lon},${lat})`
+    return `http://api.tiles.mapbox.com/v4/${mapID}/${marker}/${lon},${lat},16/600x600.png?access_token=${API_KEY}`
+  }
+
+  getPositions.addEventListener('click', function() {
+    console.log(JSON.parse(localStorage.getItem('positions')))
+  })
+
+  checkIn.addEventListener('click', function() {
+    navigator.geolocation.getCurrentPosition(function(loc) {
+      var lat = loc.coords.latitude
+      var lon = loc.coords.longitude
+      var positions = localStorage.getItem('positions')
+      if (!positions) {
+        positions = []
+      } else {
+        positions = JSON.parse(positions)
+      }
+
+      positions.push({
+        lat: lat,
+        lon: lon,
+        timestamp: loc.timestamp
+      })
+
+      localStorage.setItem('positions', JSON.stringify(positions))
+
+      map.src = mapURL(lon, lat)
+    })
+  })
+
+  reset.addEventListener('click', function() {
+    localStorage.removeItem('positions')
+  })
+})()

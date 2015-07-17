@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>Sentences exercise</title>
+ 
+ <style>
+
+ 	.theone {
+ 		font-size: 90px;
+ 		font-family: "Times New Roman", Times, serif;
+ 		color: white;
+ 	}
+
+
+	ul li {
+ 	 color:black; /* set color of list item to a dark gray */
+	 list-style:none; /* if you’re not already using a reset */
+	}
+
+	ul li:before {
+	  color:black; /* set color to red */
+	  content:"\2022"; /* /2022 is the numerical unicode for &bull; */
+	  font-size:1em; /* set the font-size of the bullet if necessary. Make sure to use em or %*/
+	  padding-right:.25em; /* give the bullet some padding from the text Make sure to use em*/
+	  position:relative;
+	  top:.1em; /* set the vertical position of the bullet if necessary. Make sure to use em or % */
+	}
+
+
+   body {
+   	 font-size: 8px;
+     font-family: Arial;
+     background-image: url("salinger.jpg");
+     no-repeat center center fixed; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+   }
+
+	input {
+		margin-top: 1%;
+		margin-left: 47%;
+	}
+
+
+	button {
+	  	-webkit-box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+		-moz-box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+		box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+		color: white;
+		background-color: rgb(202, 60, 60);
+		border-radius:50px;
+		-moz-border-radius:50px;
+		-webkit-border-radius:50px;
+		border:none;
+		font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+		font-size:16px;
+		font-weight:700;
+		height:32px;
+		padding:4px 26px;
+		margin-left: 40%;
+		margin-top: 20px;
+	   }
+
+
+</style>  
+</head>
+
+<body>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+ 
+	<div class="text theone">
+		<!-- TEXT IS GOING TO GO IN HERE! -->
+	</div>
+
+	<div class="moreSentences">
+		<button class="box">SALINGER QUOTE GENERATOR</button>
+   	</div>   
+
+	<form>   
+	   <input type="text" name="name" placeholder="Type here">
+	</form>
+
+	<!-- .before() HERE! -->
+	<ul class="sentences-list">
+		<!-- .prepend)() HERE! -->
+		<p></p>
+		<!-- .append() HERE! -->
+	</ul>
+	<!-- .after() HERE! -->
+
+ <script>
+var sentences = [ "If you really want to hear about it, the first thing you'll probably want to know is where I was born, and what my lousy childhood was like, and how my parents were occupied and all before they had me, and all that David Copperfield kind of crap, but I don't feel like going into it, if you want to know the truth.",
+
+"They don't do any damn more molding at Pencey than they do at any other school. And I didn't know anybody there that was splendid and clear-thinking and all. Maybe two guys. If that many. And they probably came to Pencey that way.",
+
+"I got the ax. They give guys the ax quite frequently at Pencey. It has a very good academic rating, Pencey. It really does.",
+
+"What I was really hanging around for, I was trying to feel some kind of a good-by. I mean I've left schools and places I didn't even know I was leaving them. I hate that. I don't care if it's a sad good-by or a bad good-by, but when I leave a place I like to know I'm leaving it. If you don't, you feel even worse.",
+
+"It was that kind of a crazy afternoon, terrifically cold, and no sun out or anything, and you felt like you were disappearing every time you crossed a road.",
+
+"Quite a few guys came from these wealthy families, but it was full of crooks anyway. The more expensive a school is, the more crooks it has.",
+
+"They're quite touchy about anything like that, especially my father. They're nice and all-I'm not saying that-but they're also touchy as hell.",
+
+"Charlotte once ran away from me, outside the studio, and I grabbed her dress to stop her, to keep her near me. A yellow cotton dress I loved because it was too long for her.",
+
+"I was not only twenty-three, but a conspicuously retarded twenty-three.",
+
+"How terrible it is when you say I love you and the person on the other end shouts back 'What?'",
+
+"I'm a kind of paranoiac in reverse. I suspect people of plotting to make me happy.",
+
+"The human voice conspires to desecrate everything on Earth.",
+
+"Marriage partners are to serve each other. Elevate, help, teach, strengthen each other, but above all, serve.",
+
+"I have scars on my hands from touching certain people.",
+
+"The true poet has no choice of material. The material plainly chooses him, not he it."
+
+];
+
+
+var pickSentence = function () {
+	var item = sentences[Math.floor(Math.random()*sentences.length)];
+	$(".text").text(item) 
+
+}
+
+ $('.box').on('click', function() {
+     pickSentence();
+  })
+
+ var addSentence = function(event) {
+ 	 event.preventDefault()
+     var newSentence = $('input').val();
+     sentences.push(newSentence);
+     pickSentence();
+     createList();
+ }
+
+ var createList = function () {
+ 	var html = [];
+    sentences.forEach(function(sentence){
+    	// create a li with the sentence
+    	var sentenceItem = "<li>" + sentence + "</li>"
+    	html.push(sentenceItem);
+    });
+    $(".sentences-list").html(html.join(""))
+}
+
+ $('form').on("submit", addSentence);
+ createList();
+
+</script>
+
+
+</body>
+</html>
